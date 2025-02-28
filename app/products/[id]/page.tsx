@@ -1,7 +1,7 @@
 import Modal from "@/components/Modal";
 import PriceInfoCard from "@/components/PriceInfoCard";
 import ProductCard from "@/components/ProductCard";
-import { getProductById, getSimilarProducts } from "@/lib/actions"
+import { getProductById, getSimilarProducts } from "@/lib/actions";
 import { formatNumber } from "@/lib/utils";
 import { Product } from "@/types";
 import Image from "next/image";
@@ -9,13 +9,14 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 
 type Props = {
-  params: { id: string }
-}
+  params: { id: string };
+};
 
-const ProductDetails = async ( { params: { id } }: Props) => {
-  const product: Product = await getProductById(id);
-
-  if(!product) redirect('/')
+const ProductDetails = async ({ params }: Props) => {
+  const { id } = params;
+  
+  const product: Product | null = await getProductById(id);
+  if (!product) redirect("/");
 
   const similarProducts = await getSimilarProducts(id);
 
@@ -38,7 +39,6 @@ const ProductDetails = async ( { params: { id } }: Props) => {
               <p className="text-[28px] text-secondary font-semibold">
                 {product.title}
               </p>
-
               <Link
                 href={product.url}
                 target="_blank"
@@ -56,7 +56,6 @@ const ProductDetails = async ( { params: { id } }: Props) => {
                   width={20}
                   height={20}
                 />
-
                 <p className="text-base font-semibold text-[#D46F77]">
                   {product.reviewsCount}
                 </p>
@@ -102,7 +101,7 @@ const ProductDetails = async ( { params: { id } }: Props) => {
                     height={16}
                   />
                   <p className="text-sm text-primary-orange font-semibold">
-                    {product.stars || '25'}
+                    {product.stars || "25"}
                   </p>
                 </div>
 
@@ -121,7 +120,7 @@ const ProductDetails = async ( { params: { id } }: Props) => {
 
               <p className="text-sm text-black opacity-50">
                 <span className="text-primary-green font-semibold">93% </span> of
-                buyers have recommeded this.
+                buyers have recommended this.
               </p>
             </div>
           </div>
@@ -160,9 +159,8 @@ const ProductDetails = async ( { params: { id } }: Props) => {
           <h3 className="text-2xl text-secondary font-semibold">
             Product Description
           </h3>
-
           <div className="flex flex-col gap-4">
-            {product?.description?.split('\n')}
+            {product?.description?.split("\n")}
           </div>
         </div>
 
@@ -173,14 +171,13 @@ const ProductDetails = async ( { params: { id } }: Props) => {
             width={22}
             height={22}
           />
-
           <Link href="/" className="text-base text-white">
             Buy Now
           </Link>
         </button>
       </div>
 
-      {similarProducts && similarProducts?.length > 0 && (
+      {similarProducts && similarProducts.length > 0 && (
         <div className="py-14 flex flex-col gap-2 w-full">
           <p className="section-text">Similar Products</p>
 
@@ -192,7 +189,7 @@ const ProductDetails = async ( { params: { id } }: Props) => {
         </div>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default ProductDetails
+export default ProductDetails;
