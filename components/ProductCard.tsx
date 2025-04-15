@@ -6,10 +6,13 @@ import React from 'react'
 interface Props {
   product: Product;
 }
- 
+
 const ProductCard = ({ product }: Props) => {
   return (
-    <Link href={`/products/${product._id}`} className="product-card">
+    <Link
+      href={`/products/${product._id}`}
+      className="product-card transform transition-transform duration-300 hover:scale-105"
+    >
       <div className="product-card_img-container">
         <Image 
           src={product.image}
@@ -38,4 +41,4 @@ const ProductCard = ({ product }: Props) => {
   )
 }
 
-export default ProductCard
+export default ProductCard;
